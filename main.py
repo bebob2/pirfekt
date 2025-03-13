@@ -1,4 +1,6 @@
 from GUI import * 
+from Kreis import *
+
 # import canvas  #importiert die "Canvas/zeichenfläche aus canvas.py"
 
 gui = Gui(1280, 720)
@@ -13,11 +15,14 @@ while gui.is_running():
             gui.update()
 
         print("Auswertung")
+        kreis = Kreis(gui.zeichenklasse.liste)
+        kreis.center = kreis.findcenterpoint()
+        print(kreis.center)
         #print(gui.zeichenklasse.liste)
         
-    
+
 pygame.quit()
-#Test4!!!
+
 
 
 
