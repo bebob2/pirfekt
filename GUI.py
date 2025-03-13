@@ -49,6 +49,9 @@ class Zeichenklasse:
         pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y - self.groesse), (x + self.groesse, y + self.groesse), stift_groesse)
         pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y + self.groesse), (x + self.groesse, y - self.groesse), stift_groesse)
         pygame.display.flip()
+    def zeichneKreis(self,mx,my,r):
+        pygame.draw.circle(self.bildschirm, self.farbe, (mx, my), r, stift_groesse)
+        pygame.display.flip()
 
 
 class Button:
@@ -122,7 +125,8 @@ class Gui:
     def is_running(self):
         return self.laeuft
 
-
+    def testkreis(self):
+        self.zeichenklasse.zeichneKreis(500,500,100)
     def testmittelpunkt(self, x,y):
         self.zeichenklasse.zeichneX(x,y)
 
