@@ -36,10 +36,10 @@ class Zeichenklasse:
             if self.letzte_pos != None:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
                 #satz des Pythagoras
-                d = ((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2)
+                d = int((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2)
 
                 print(self.letzte_pos[0])
-                if d > 20:
+                if d > 121:
                     self.liste += maus_pos
                 self.letzte_pos = maus_pos
             pygame.display.flip()
