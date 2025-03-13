@@ -7,17 +7,17 @@ class Kreis:
         self.pixellist = pixellist
 
     def findcenterpoint(self):
-        länge = len(self.pixellist)/2
+        länge = int(len(self.pixellist))
         x_sum = 0
         y_sum = 0
-        for i in self.pixellist:
-            if self.pixellist[i] % 2:
-                x_sum += self.pixellist
+        for i in range(länge):
+            if self.pixellist[i] % 2 == 0:
+                x_sum += self.pixellist[i]
             else:
-                y_sum += self.pixellist
+                y_sum += self.pixellist[i]
 
-        x_Mitte = x_sum / länge
-        y_Mitte = y_sum / länge
+        x_Mitte = int(x_sum / (länge/2))
+        y_Mitte = int(y_sum / (länge/2))
         return x_Mitte, y_Mitte
     
     def findradius(self):

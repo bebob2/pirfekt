@@ -19,6 +19,10 @@ while gui.is_running():
         kreis = Kreis(gui.zeichenklasse.liste)
         kreis.center = kreis.findcenterpoint()
         print(kreis.center)
+        gui.testmittelpunkt(kreis.center[0], kreis.center[1])
+        for i in range(int(len(kreis.pixellist)) - 2):
+            gui.testmittelpunkt(kreis.pixellist[i],kreis.pixellist[i+1])
+
         #print(gui.zeichenklasse.liste)
         
 
