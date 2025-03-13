@@ -55,17 +55,21 @@ class Zeichenklasse:
 
 
 class Button:
-    def __init__(self, text, pos, size, color, font_size):
-        self.text = text
+    def __init__(self, img, pos, size, color, font_size):
+        self.img = img
         self.rect = pygame.Rect(pos, size)
         self.color = color
         self.font = pygame.font.SysFont('Arial', font_size)
     
     def draw(self, screen):
-        pygame.draw.rect(screen, self.color, self.rect, border_radius=12)
-        text_surf = self.font.render(self.text, True, (0, 0, 0))
-        text_rect = text_surf.get_rect(center=self.rect.center)
-        screen.blit(text_surf, text_rect)
+        if self.img:
+            img_surface = pygame.image.load(self.img).convert_alpha()
+            img_surface = pygame.transform.scale(img_surface, self.rect.size)
+            screen.blit(img_surface, self.rect.topleft)
+        else:
+            text_surface = self.font.render(self.img, True, (255, 255, 255))
+            text_rect = text_surface.get_rect(center=self.rect.center)
+            screen.blit(text_surface, text_rect)
     
     def is_clicked(self, event):
         return event.type == pygame.MOUSEBUTTONDOWN and self.rect.collidepoint(event.pos)
@@ -74,10 +78,13 @@ class Gui:
     def __init__(self, window_width, window_height):
         self.bildschirm = pygame.display.set_mode((window_width, window_height))
         pygame.display.set_caption("Pirfekt v3.14")
+        pygame.display.set_icon(pygame.image.load('./logos/pirfekt1.png'))
         self.laeuft = True
         self.zeichenklasse = Zeichenklasse(self.bildschirm, STIFT, stift_groesse)
-        self.neu_knopf = Button("Neu", (900, 100), (100, 50), (65, 90, 99), 30)
-        self.speichern_knopf = Button("Speichern", (1010, 100), (120, 50), (65, 90, 99), 30)
+        self.pirfektLogo = pygame.image.load('./logos/pirfektLogo circ.png').convert_alpha()
+        self.pirfektLogoSurface = pygame.transform.scale(self.pirfektLogo, (70,70))
+        self.neu_knopf = Button('./logos/pirfektreload 1.png', (900, 40), (70, 70), (65, 90, 99), 30)
+        self.speichern_knopf = Button('./logos/pirfektsave circ1.png', (1050, 40), (70, 70), (65, 90, 99), 30)
         self.showtext()
         self.showbutton()
     
@@ -87,6 +94,7 @@ class Gui:
     def showbutton(self):
         self.neu_knopf.draw(self.bildschirm)
         self.speichern_knopf.draw(self.bildschirm)
+        self.bildschirm.blit(self.pirfektLogoSurface,(100,40))
     
     def showtext(self):
         font = pygame.font.SysFont('Arial', 30)
