@@ -34,7 +34,11 @@ class Zeichenklasse:
             maus_pos = pygame.mouse.get_pos()
             if self.letzte_pos is not None:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
-                if self.letzte_pos != maus_pos:
+                #satz des Pythagoras
+                d = ((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2)
+
+                print(self.letzte_pos[0])
+                if d > 20:
                     self.liste += maus_pos
                 self.letzte_pos = maus_pos
             pygame.display.flip()
@@ -110,8 +114,8 @@ class Gui:
     
     def is_running(self):
         return self.laeuft
-    def testmittelpunkt(self):
-        self.x_zeichnen.zeichnen(500,500)
+    def testmittelpunkt(self, x,y):
+        self.x_zeichnen.zeichnen(x,y)
 
 class ZeichneX:
     def __init__(self, bildschirm, farbe, groesse):
