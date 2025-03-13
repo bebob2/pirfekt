@@ -102,14 +102,24 @@ class Gui:
         pygame.display.flip()
     
     def reset(self):
+        self.zeichenklasse.zeichnen = True
         print("reset")
         self.bildschirm.fill(HINTERGRUND)
-        self.zeichenklasse.zeichnen = True
         self.zeichenklasse.liste = []  # Leere die Liste der gezeichneten Punkte
         self.zeichenklasse.letzte_pos = None  # Setze die letzte Position zurück
         self.showtext()
         self.showbutton()
         pygame.display.flip()
+
+
+    def screenshot_speichern(self):
+        # Screenshot speichern
+        zeitstempel = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
+        speicherpfad = os.path.join(os.getcwd(), 'screenshots')
+        if not os.path.exists(speicherpfad):
+            os.makedirs(speicherpfad)
+        pygame.image.save(self.bildschirm, os.path.join(speicherpfad, f'screenshot_{zeitstempel}.png'))
+        
     
     def handle_events(self):
         for event in pygame.event.get():
@@ -120,9 +130,10 @@ class Gui:
                     self.reset()
                 elif self.speichern_knopf.is_clicked(event):
                     print("Speichern")
+                    self.screenshot_speichern()
                 elif self.zeichenklasse.zeichnen:
                     self.zeichenklasse.starte_zeichnen(event.pos)
-            elif event.type == pygame.MOUSEBUTTONUP:
+            elif event.type == pygame.MOUSEBUTTONUP and self.zeichenklasse.letzte_pos != None:
                 self.zeichenklasse.beende_zeichnen()
                 
     
