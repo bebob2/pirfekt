@@ -20,6 +20,7 @@ class Zeichenklasse:
         self.liste = []
     
     def starte_zeichnen(self, pos):
+        self.zeichnen = True
         self.letzte_pos = pos
     
     def beende_zeichnen(self):
@@ -32,7 +33,7 @@ class Zeichenklasse:
     def zeichne(self):
         if self.zeichnen:
             maus_pos = pygame.mouse.get_pos()
-            if self.letzte_pos is not None:
+            if self.letzte_pos != None:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
                 if self.letzte_pos != maus_pos:
                     self.liste += maus_pos
@@ -40,6 +41,11 @@ class Zeichenklasse:
             pygame.display.flip()
     def liste(self):
         return self.liste
+    def zeichneX(self,x,y):
+        pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y - self.groesse), (x + self.groesse, y + self.groesse), stift_groesse)
+        pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y + self.groesse), (x + self.groesse, y - self.groesse), stift_groesse)
+        pygame.display.flip()
+
 
 class Button:
     def __init__(self, text, pos, size, color, font_size):
@@ -65,7 +71,6 @@ class Gui:
         self.zeichenklasse = Zeichenklasse(self.bildschirm, STIFT, stift_groesse)
         self.neu_knopf = Button("Neu", (900, 100), (100, 50), (65, 90, 99), 30)
         self.speichern_knopf = Button("Speichern", (1010, 100), (120, 50), (65, 90, 99), 30)
-        self.x_zeichnen = ZeichneX(self.bildschirm, STIFT, stift_groesse)
         self.showtext()
         self.showbutton()
     
@@ -86,6 +91,8 @@ class Gui:
     def reset(self):
         self.bildschirm.fill(HINTERGRUND)
         self.zeichenklasse.zeichnen = True
+        self.zeichenklasse.liste = []  # Leere die Liste der gezeichneten Punkte
+        self.zeichenklasse.letzte_pos = None  # Setze die letzte Position zurück
         self.showtext()
         self.showbutton()
         pygame.display.flip()
@@ -111,15 +118,5 @@ class Gui:
     def is_running(self):
         return self.laeuft
     def testmittelpunkt(self):
-        self.x_zeichnen.zeichnen(500,500)
+        self.zeichenklasse.zeichneX(500,500)
 
-class ZeichneX:
-    def __init__(self, bildschirm, farbe, groesse):
-         self.bildschirm = bildschirm
-         self.farbe = farbe
-         self.groesse = groesse
-    def zeichnen(self, mitte_x, mitte_y):
-         # Zeichne ein X in der Mitte des Kreises
-         pygame.draw.line(self.bildschirm, self.farbe, (mitte_x - self.groesse, mitte_y - self.groesse), (mitte_x + self.groesse, mitte_y + self.groesse), stift_groesse)
-         pygame.draw.line(self.bildschirm, self.farbe, (mitte_x - self.groesse, mitte_y + self.groesse), (mitte_x + self.groesse, mitte_y - self.groesse), stift_groesse)
-         pygame.display.flip()
