@@ -8,18 +8,18 @@ pygame.init()
 # Farben definieren
 HINTERGRUND = (34, 39, 41)
 STIFT = (255, 255, 255)
+stift_groesse = 4
 
 class Zeichenklasse:
     def __init__(self, bildschirm, farbe, groesse):
         self.bildschirm = bildschirm
         self.farbe = farbe
         self.groesse = groesse
-        self.zeichnen = False
+        self.zeichnen = True
         self.letzte_pos = None
         self.liste = []
     
     def starte_zeichnen(self, pos):
-        self.zeichnen = True
         self.letzte_pos = pos
     
     def beende_zeichnen(self):
@@ -60,11 +60,12 @@ class Button:
 class Gui:
     def __init__(self, window_width, window_height):
         self.bildschirm = pygame.display.set_mode((window_width, window_height))
-        pygame.display.set_caption("Pirfekt GUI")
+        pygame.display.set_caption("Pirfekt v3.14")
         self.laeuft = True
-        self.zeichenklasse = Zeichenklasse(self.bildschirm, STIFT, 4)
+        self.zeichenklasse = Zeichenklasse(self.bildschirm, STIFT, stift_groesse)
         self.neu_knopf = Button("Neu", (900, 100), (100, 50), (65, 90, 99), 30)
         self.speichern_knopf = Button("Speichern", (1010, 100), (120, 50), (65, 90, 99), 30)
+        self.x_zeichnen = ZeichneX(self.bildschirm, STIFT, stift_groesse)
         self.showtext()
         self.showbutton()
     
@@ -77,13 +78,14 @@ class Gui:
     
     def showtext(self):
         font = pygame.font.SysFont('Arial', 30)
-        infoText = font.render("Zeichnen Sie eine Form und lassen Sie die Maustaste los!", True, (255, 255, 255))
+        infoText = font.render("Zeichnen Sie einen Kreis!", True, (255, 255, 255))
         self.bildschirm.fill(HINTERGRUND)
         self.bildschirm.blit(infoText, (300, 60))
         pygame.display.flip()
     
     def reset(self):
         self.bildschirm.fill(HINTERGRUND)
+        self.zeichenklasse.zeichnen = True
         self.showtext()
         self.showbutton()
         pygame.display.flip()
@@ -95,13 +97,29 @@ class Gui:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if self.neu_knopf.is_clicked(event):
                     self.reset()
-                else:
+                elif self.speichern_knopf.is_clicked(event):
+                    print("Speichern")
+                elif self.zeichenklasse.zeichnen:
                     self.zeichenklasse.starte_zeichnen(event.pos)
             elif event.type == pygame.MOUSEBUTTONUP:
                 self.zeichenklasse.beende_zeichnen()
+                
     
     def update(self):
         self.zeichenklasse.zeichne()
     
     def is_running(self):
         return self.laeuft
+    def testmittelpunkt(self):
+        self.x_zeichnen.zeichnen(500,500)
+
+class ZeichneX:
+    def __init__(self, bildschirm, farbe, groesse):
+         self.bildschirm = bildschirm
+         self.farbe = farbe
+         self.groesse = groesse
+    def zeichnen(self, mitte_x, mitte_y):
+         # Zeichne ein X in der Mitte des Kreises
+         pygame.draw.line(self.bildschirm, self.farbe, (mitte_x - self.groesse, mitte_y - self.groesse), (mitte_x + self.groesse, mitte_y + self.groesse), stift_groesse)
+         pygame.draw.line(self.bildschirm, self.farbe, (mitte_x - self.groesse, mitte_y + self.groesse), (mitte_x + self.groesse, mitte_y - self.groesse), stift_groesse)
+         pygame.display.flip()

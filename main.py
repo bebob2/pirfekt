@@ -11,6 +11,7 @@ while gui.is_running():
         while gui.zeichenklasse.zeichenzustand():
             gui.handle_events()
             gui.update()
+            
 
         print("Auswertung")
         #print(gui.zeichenklasse.liste)
