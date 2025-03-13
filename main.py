@@ -8,7 +8,6 @@ gui.reset()
 
 while gui.is_running():
     gui.handle_events()
-    gui.update()
     if gui.zeichenklasse.zeichenzustand():
         while gui.zeichenklasse.zeichenzustand():
             gui.handle_events()
@@ -21,9 +20,10 @@ while gui.is_running():
         kreis.center = kreis.findcenterpoint()
         print(kreis.center)
         gui.testmittelpunkt(kreis.center[0], kreis.center[1])
-        for i in range(int(len(kreis.pixellist)/2) - 2):
-            gui.testmittelpunkt(kreis.pixellist[i]/2,kreis.pixellist[i+1]/2)
-
+        #for i in range(int(len(kreis.pixellist)/2)):
+        #    gui.testmittelpunkt(kreis.pixellist[i*2],kreis.pixellist[i*2+1])
+        kreis.radius = kreis.findradius()
+        gui.testkreis(kreis.center[0],kreis.center[1],kreis.radius)
         #print(gui.zeichenklasse.liste)
         
 

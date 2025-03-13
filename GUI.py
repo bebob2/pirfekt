@@ -37,20 +37,18 @@ class Zeichenklasse:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
                 #satz des Pythagoras
                 d = int((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2)
-
-                print(self.letzte_pos[0])
-                if d > 121:
+                if d > 400:
+                    print(str(self.letzte_pos) + "  --  " + str(maus_pos) + "  --  " + str(d))
                     self.liste += maus_pos
-                self.letzte_pos = maus_pos
+                    self.letzte_pos = maus_pos
             pygame.display.flip()
-    def liste(self):
-        return self.liste
+
     def zeichneX(self,x,y):
         pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y - self.groesse), (x + self.groesse, y + self.groesse), stift_groesse)
         pygame.draw.line(self.bildschirm, self.farbe, (x - self.groesse, y + self.groesse), (x + self.groesse, y - self.groesse), stift_groesse)
         pygame.display.flip()
     def zeichneKreis(self,mx,my,r):
-        pygame.draw.circle(self.bildschirm, self.farbe, (mx, my), r, stift_groesse)
+        pygame.draw.circle(self.bildschirm, (255, 100, 100), (mx, my), r, 2)
         pygame.display.flip()
 
 
@@ -104,6 +102,7 @@ class Gui:
         pygame.display.flip()
     
     def reset(self):
+        print("reset")
         self.bildschirm.fill(HINTERGRUND)
         self.zeichenklasse.zeichnen = True
         self.zeichenklasse.liste = []  # Leere die Liste der gezeichneten Punkte
@@ -133,8 +132,9 @@ class Gui:
     def is_running(self):
         return self.laeuft
 
-    def testkreis(self):
-        self.zeichenklasse.zeichneKreis(500,500,100)
+    def testkreis(self, x, y, r):
+        self.zeichenklasse.zeichneKreis(x, y, r)
+
     def testmittelpunkt(self, x,y):
         self.zeichenklasse.zeichneX(x,y)
 
