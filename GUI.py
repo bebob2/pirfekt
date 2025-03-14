@@ -1,5 +1,6 @@
 import pygame
 import os
+import sys
 import datetime
 
 # Initialisiere Pygame
@@ -133,6 +134,12 @@ class Gui:
                     self.screenshot_speichern()
                 elif self.zeichenklasse.zeichnen:
                     self.zeichenklasse.starte_zeichnen(event.pos)
+            elif  event.type == pygame.KEYDOWN:
+                if  event.key == pygame.K_c:
+                    self.reset()
+                elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
+                    print("Speichern")
+                    self.screenshot_speichern()
             elif event.type == pygame.MOUSEBUTTONUP and self.zeichenklasse.letzte_pos != None:
                 self.zeichenklasse.beende_zeichnen()
                 
