@@ -17,7 +17,7 @@ while gui.is_running():
         gui.update()
         center = False
     else:
-        if center == False and len(gui.zeichenklasse.liste) > 1:
+        if center == False and len(gui.zeichenklasse.liste) > 3:
             print("Auswertung")
             # print(gui.zeichenklasse.liste)
             kreis = Kreis(gui.zeichenklasse.liste)
