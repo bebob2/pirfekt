@@ -9,7 +9,7 @@ class Kreis:
 
     def findcenterpoint(self):
         länge = int(len(self.pixellist))
-        print(länge)
+        # print(länge)
         x_sum = 0
         y_sum = 0
         for i in range(int(länge/2)):

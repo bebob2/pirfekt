@@ -25,7 +25,7 @@ while gui.is_running():
             #    gui.testmittelpunkt(kreis.pixellist[i*2],kreis.pixellist[i*2+1])   ###
             kreis.center = kreis.findcenterpoint()
             center = kreis.center
-            print(kreis.center)
+            # print(kreis.center)
             gui.testmittelpunkt(kreis.center[0], kreis.center[1])
             kreis.radius = kreis.findradius()
             gui.testkreis(kreis.center[0],kreis.center[1],kreis.radius)
