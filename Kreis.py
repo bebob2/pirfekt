@@ -29,5 +29,24 @@ class Kreis:
         r = math.sqrt(t/(länge/2))
         return r
 
+    # def findscore(self):
+    #     varianzsumme = 0
+    #     for i in self.pixellist:
+    #         varianzsumme += abs(i - self.radius)
+            
+    #     standartabweichung = (varianzsumme / len(self.pixellist))
+
+    #     return standartabweichung
+
     def findscore(self):
-        pass
+        länge = len(self.pixellist)
+        varianzsumme = 0
+        for i in range(int(länge/2)):
+            abstand = math.sqrt(((self.center[0] - self.pixellist[i*2])**2+(self.center[1] - self.pixellist[i*2+1])**2))
+            varianzsumme += abs(abstand - self.radius)
+            
+        standartabweichung = varianzsumme / (int(len(self.pixellist) / 2))
+        prozentuale_abweichung = (standartabweichung / self.radius) * 100
+        score = 100 - prozentuale_abweichung
+
+        return score

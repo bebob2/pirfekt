@@ -1,6 +1,5 @@
 import pygame
 import os
-import sys
 import datetime
 
 # Initialisiere Pygame
@@ -38,8 +37,8 @@ class Zeichenklasse:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
                 #satz des Pythagoras
                 d = int((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2)
-                if d > 400:
-                    print(str(self.letzte_pos) + "  --  " + str(maus_pos) + "  --  " + str(d))
+                if d > 50:                                     #####################hier Punkt-dichte ändern
+                    # print(str(self.letzte_pos) + "  --  " + str(maus_pos) + "  --  " + str(d)) 
                     self.liste += maus_pos
                     self.letzte_pos = maus_pos
             pygame.display.flip()
@@ -84,6 +83,7 @@ class Gui:
         self.pirfektLogoSurface = pygame.transform.scale(self.pirfektLogo, (70,70))
         self.neu_knopf = Button('./logos/pirfektreload 1.png', (900, 40), (70, 70), (65, 90, 99), 30)
         self.speichern_knopf = Button('./logos/pirfektsave circ1.png', (1050, 40), (70, 70), (65, 90, 99), 30)
+        self.highscore = 0
         self.showtext()
         self.showbutton()
     
@@ -93,15 +93,32 @@ class Gui:
     def showbutton(self):
         self.neu_knopf.draw(self.bildschirm)
         self.speichern_knopf.draw(self.bildschirm)
-        self.bildschirm.blit(self.pirfektLogoSurface,(100,40))
+        self.bildschirm.blit(self.pirfektLogoSurface,(90 ,20))
     
     def showtext(self):
         font = pygame.font.SysFont('Arial', 30)
-        infoText = font.render("Zeichnen Sie einen Kreis!", True, (255, 255, 255))
+        infoText = font.render("Zeichnen Sie einen Kreis!", True, STIFT)
         self.bildschirm.fill(HINTERGRUND)
-        self.bildschirm.blit(infoText, (300, 60))
+        self.bildschirm.blit(infoText, (340, 60))
         pygame.display.flip()
-    
+
+    def showScore(self,score):
+        font = pygame.font.SysFont('Arial', 35)
+        scoreText = font.render(f'Score: {round(score,2)}', True, STIFT)
+        # self.bildschirm.fill(HINTERGRUND)
+        self.bildschirm.blit(scoreText, (300, 100))
+        pygame.display.flip()
+
+    def setHScore(self, hscore):
+        self.highscore = hscore
+
+    def showHScore(self,highscore):
+        font = pygame.font.SysFont('Arial', 30)
+        scoreText = font.render(f'Highscore: {round(highscore,2)}', True, STIFT)
+        # self.bildschirm.fill(HINTERGRUND)
+        self.bildschirm.blit(scoreText, (90, 103))
+        pygame.display.flip()
+
     def reset(self):
         self.zeichenklasse.zeichnen = True
         print("reset")
@@ -110,6 +127,7 @@ class Gui:
         self.zeichenklasse.letzte_pos = None  # Setze die letzte Position zurück
         self.showtext()
         self.showbutton()
+        self.showHScore(self.highscore)
         pygame.display.flip()
 
 
