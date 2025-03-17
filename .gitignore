@@ -173,3 +173,6 @@ cython_debug/
 
 #####me
 screenshots/*
+
+__pycache__/*
+./__pycache__/*
