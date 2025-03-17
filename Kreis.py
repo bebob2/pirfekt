@@ -1,13 +1,23 @@
 import math
 
 class Kreis:
+    '''
+    Klasse Kreis: Kreis mit Mittelpunkt, Radius, Punktzahl(Score), und Liste mit den Punkten vom Kreis ([x1;y1:x2;y2]). Diese Liste soll in der main.py Datei aus der GUI Datei übergeben werden.
+    '''
+
+
     def __init__(self, pixellist):
-        self.center = None
+        self.mittelpunkt = None
         self.radius = None
         self.score = None
         self.pixellist = pixellist
 
-    def findcenterpoint(self):
+    def findeMittelpunkt(self):
+        '''
+        Methode von der Klasse Kreis, die den Mittelpunkt bestimmt.
+        '''
+
+        
         länge = int(len(self.pixellist))
         # print(länge)
         x_sum = 0
@@ -20,33 +30,33 @@ class Kreis:
         y_Mitte = int(y_sum / (länge/2))
         return x_Mitte, y_Mitte
     
-    def findradius(self):
+    def findeRadius(self):
+        '''
+        Methode von der Klasse Kreis, die den Radius bestimmt.
+        '''
+
         länge = int(len(self.pixellist))
         t = 0.0
         for i in range(int(länge/2)):
-            t += ((self.center[0] - self.pixellist[i*2])**2+(self.center[1] - self.pixellist[i*2+1])**2)
+            t += ((self.mittelpunkt[0] - self.pixellist[i*2])**2+(self.mittelpunkt[1] - self.pixellist[i*2+1])**2)
 
         r = math.sqrt(t/(länge/2))
         return r
 
-    # def findscore(self):
-    #     varianzsumme = 0
-    #     for i in self.pixellist:
-    #         varianzsumme += abs(i - self.radius)
-            
-    #     standartabweichung = (varianzsumme / len(self.pixellist))
 
-    #     return standartabweichung
+    def findeScore(self):
+        '''
+        Methode von der Klasse Kreis, die die Punktzahl bestimmt.
+        '''
 
-    def findscore(self):
-        länge = len(self.pixellist)
+        länge = len(self.pixellist) 
         varianzsumme = 0
-        for i in range(int(länge/2)):
-            abstand = math.sqrt(((self.center[0] - self.pixellist[i*2])**2+(self.center[1] - self.pixellist[i*2+1])**2))
-            varianzsumme += abs(abstand - self.radius)
+        for i in range(int(länge/2)): # In zweierschritten, weil die liste x und y Koordinaten abwechselnd gespeichert
+            abstand = math.sqrt(((self.mittelpunkt[0] - self.pixellist[i*2])**2+(self.mittelpunkt[1] - self.pixellist[i*2+1])**2)) #Satz des Pythagoras zur Abstanndsbestimmung
+            varianzsumme += abs(abstand - self.radius) # Summe der Abweichungen vom Radius
             
-        standartabweichung = varianzsumme / (int(len(self.pixellist) / 2))
+        standartabweichung = varianzsumme / (int(len(self.pixellist) / 2)) # Summe der Abweichungen vom Radius / Anzahl der Punkte in der Liste (x und y Koordinaten abwechselnd speichert)
         prozentuale_abweichung = (standartabweichung / self.radius) * 100
-        score = 100 - prozentuale_abweichung
+        score = 100 - prozentuale_abweichung # Score = 100 - Prozentuale Abweichung. Ziel: 100 Punkte für einen Perfekten Kreis mit keiner Abweichung zum Radius
 
         return score

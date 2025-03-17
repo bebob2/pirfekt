@@ -6,7 +6,7 @@ from Kreis import *
 gui = Gui(1280, 720)
 gui.reset()
 
-center = False
+mittelpunkt = False
 
 while gui.is_running():
     highscore = 0
@@ -15,21 +15,21 @@ while gui.is_running():
     if gui.zeichenklasse.zeichenzustand():
         gui.handle_events()
         gui.update()
-        center = False
+        mittelpunkt = False
     else:
-        if center == False and len(gui.zeichenklasse.liste) > 5:
+        if mittelpunkt == False and len(gui.zeichenklasse.liste) > 5:
             print("Auswertung")
             # print(gui.zeichenklasse.liste)
             kreis = Kreis(gui.zeichenklasse.liste)
             # for i in range(int(len(kreis.pixellist)/2)):                          ###
             #    gui.testmittelpunkt(kreis.pixellist[i*2],kreis.pixellist[i*2+1])   ###
-            kreis.center = kreis.findcenterpoint()
-            center = kreis.center
+            kreis.mittelpunkt = kreis.findeMittelpunkt()
+            mittelpunkt = kreis.mittelpunkt
             # print(kreis.center)
-            gui.testmittelpunkt(kreis.center[0], kreis.center[1])
-            kreis.radius = kreis.findradius()
-            gui.testkreis(kreis.center[0],kreis.center[1],kreis.radius)
-            score = kreis.findscore()
+            gui.testmittelpunkt(kreis.mittelpunkt[0], kreis.mittelpunkt[1])
+            kreis.radius = kreis.findeRadius()
+            gui.testkreis(kreis.mittelpunkt[0],kreis.mittelpunkt[1],kreis.radius)
+            score = kreis.findeScore()
             # print(score)
             gui.showScore(score)
             if score > gui.highscore:
