@@ -1,4 +1,4 @@
-# Prfekt!
+# πrfekt!
 
 **πrfekt!** ist ein Spiel, indem man versuchen muss, einen möglichst
 perfekten Kreis zu zeichnen.
