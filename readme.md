@@ -1,4 +1,4 @@
-# πrfekt!
+# πrfekt! von Fionn und Benjamin
 
 **πrfekt!** ist ein Spiel, indem man versuchen muss, einen möglichst
 perfekten Kreis zu zeichnen.
