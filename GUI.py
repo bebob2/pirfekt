@@ -58,8 +58,10 @@ class Zeichenklasse:
                 pygame.draw.line(self.bildschirm, self.farbe, self.letzte_pos, maus_pos, self.groesse)
                 
                 d = int((self.letzte_pos[0] - maus_pos[0])**2) + ((self.letzte_pos[1] - maus_pos[1])**2) #satz des Pythagoras
-                if d > 50:                                     ##################### <---- hier Punkt-dichte ändern
-                    # print(str(self.letzte_pos) + "  --  " + str(maus_pos) + "  --  " + str(d)) 
+                if d > 50:                                     ##################### <---- hier Punkt-dichte ändern | Wenn der Abstand >50LE ist, wird eine neuer Punkt gespeichert
+
+                    # print(str(self.letzte_pos) + "  --  " + str(maus_pos) + "  --  " + str(d)) ## Aktivieren wenn man die letzte Maus position und die aktuelle mausposition sehen möchte
+
                     self.liste += maus_pos
                     self.letzte_pos = maus_pos
             pygame.display.flip()
@@ -151,10 +153,10 @@ class Gui:
         '''
         Methode von der Klasse GUI, die den Text "Zeichnen Sie einen Kreis!" anzeigt/rendert.
         '''          
-        font = pygame.font.SysFont('Arial', 30)
-        infoText = font.render("Zeichnen Sie einen Kreis!", True, FORDERGRUND)
-        self.bildschirm.blit(infoText, (340, 60))
-        pygame.display.flip()
+        font = pygame.font.SysFont('Arial', 30)  # Definiere Schriftart
+        infoText = font.render("Zeichnen Sie einen Kreis!", True, FORDERGRUND) # Text mit der Schriftart definieren/speichern
+        self.bildschirm.blit(infoText, (340, 60)) #Text Einblenden
+        pygame.display.flip() #Aktualiesieren
 
     def showScore(self,score):
         '''
@@ -196,11 +198,12 @@ class Gui:
         Wenn die Methode Aufgerufgen wird, wird der Bildschrim geleert die UI-Elemente angezeigt und die Punktliste zurückgesetzt, sowie ein print-Befehl erzeugt
 
         '''          
-        self.zeichenklasse.zeichnen = True
+        self.zeichenklasse.zeichnen = True  # Zeichnen wieder Erlauben
         print("reset")
-        self.bildschirm.fill(HINTERGRUND)
+        self.bildschirm.fill(HINTERGRUND) # Bildschirm mit der Hintergrundfarbe füllen --> "leerer" Bildschirm
         self.zeichenklasse.liste = []  # Leere die Liste der gezeichneten Punkte
         self.zeichenklasse.letzte_pos = None  # Setze die letzte Position zurück
+        # Zeige UI-Elemente und Aktualisiere:
         self.showtext()
         self.showbutton()
         self.showHScore(self.highscore)
@@ -216,8 +219,8 @@ class Gui:
 
         '''      
 
-        zeitstempel = datetime.datetime.now().strftime('%Y%m%d_%H%M%S')
-        speicherpfad = os.path.join(os.getcwd(), 'screenshots')
+        zeitstempel = datetime.datetime.now().strftime('%Y%m%d_%H%M%S') # Zeitstempelformat Bsp.:  20250309_140937
+        speicherpfad = os.path.join(os.getcwd(), 'screenshots')  ## Speicherpfad auf ./screenshots setzen
         if not os.path.exists(speicherpfad):
             os.makedirs(speicherpfad)
         pygame.image.save(self.bildschirm, os.path.join(speicherpfad, f'screenshot_{zeitstempel}.png'))
@@ -229,23 +232,31 @@ class Gui:
 
         '''    
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self.laeuft = False
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if self.neu_knopf.is_clicked(event):
-                    self.reset()
-                elif self.speichern_knopf.is_clicked(event):
+            if event.type == pygame.QUIT: # Wenn man auf programm beenden drückt (vom Betriebssystem Abhängig)
+                self.laeuft = False # Setze laeuft auf False --> in der main.py schleife wird die Schleife beendet also das programm beendet (wegen der letzten main Zeile). 
+
+            elif event.type == pygame.MOUSEBUTTONDOWN: # Wenn Maustaste gedrückt wird:
+
+                if self.neu_knopf.is_clicked(event): # Wen der neuknopf gedrückt wird:
+                    self.reset() 
+
+                elif self.speichern_knopf.is_clicked(event): # Wenn der Screenshot/Speichern Knopf gedrückt wird:
                     print("Speichern")
                     self.screenshot_speichern()
-                elif self.zeichenklasse.zeichnen:
-                    self.zeichenklasse.starte_zeichnen(event.pos)
-            elif  event.type == pygame.KEYDOWN:
-                if  event.key == pygame.K_c:
+
+                elif self.zeichenklasse.zeichnen: # Wenn kein Knopf gedrückt wurde, also etwas andres:
+                    self.zeichenklasse.starte_zeichnen(event.pos) 
+
+            elif  event.type == pygame.KEYDOWN: # Wenn eine Tastatur-Taste gedrückt wird:
+
+                if  event.key == pygame.K_c: # Wenn "c" gedrückt wurde:
                     self.reset()
-                elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL:
+
+                elif event.key == pygame.K_s and pygame.key.get_mods() & pygame.KMOD_CTRL: # Wenn ("Strg" + "S") gedrückt wurde:
                     print("Speichern")
                     self.screenshot_speichern()
-            elif event.type == pygame.MOUSEBUTTONUP and self.zeichenklasse.letzte_pos != None:
+
+            elif event.type == pygame.MOUSEBUTTONUP and self.zeichenklasse.letzte_pos != None: # Wenn die Maustaste wieder lossgelassen wird UND eine Zeichnung stattgefunden hat (sonst beendet das losslasen über einem Knopf schon das Spiel):
                 self.zeichenklasse.beende_zeichnen()
                 
     

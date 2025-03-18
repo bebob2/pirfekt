@@ -18,11 +18,14 @@ while gui.is_running():
         gui.update()
         mittelpunkt = False
     else:
-        # Prüft ob die Punktliste der Zeichnung mindestens mehr als 5 Punkte hat, um falsche Auswertungen zu vermeiden
-        if mittelpunkt == False and len(gui.zeichenklasse.liste) > 5:
+        
+        if mittelpunkt == False and len(gui.zeichenklasse.liste) > 5: # Prüft ob die Punktliste der Zeichnung mindestens mehr als 5 Punkte hat, um falsche Auswertungen zu vermeiden
             # Auswertung wird gestartet
             # Ein Objekt wird erstellt von dem der Mittelpunkt, Radius und Score ermittelt wird
             kreis = Kreis(gui.zeichenklasse.liste)
+
+            # for i in range(int(len(kreis.pixellist)/2)):                          ### --> aktivieren um die Punkte durch ein X zu kennzeichnen
+            #    gui.testmittelpunkt(kreis.pixellist[i*2],kreis.pixellist[i*2+1])   ### --> aktivieren um die Punkte durch ein X zu kennzeichnen
 
             kreis.mittelpunkt = kreis.findeMittelpunkt()
             mittelpunkt = kreis.mittelpunkt
