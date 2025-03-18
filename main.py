@@ -12,7 +12,6 @@ mittelpunkt = False
 
 # Die Schleife läuft so lange das Fenster offen ist
 while gui.is_running():
-    highscore = 0
     if gui.zeichenklasse.zeichenzustand():
         gui.handle_events()
         gui.update()
