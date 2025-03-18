@@ -1,10 +1,9 @@
 import math
 
 class Kreis:
-    '''
-    Klasse Kreis: Kreis mit Mittelpunkt, Radius, Punktzahl(Score), und Liste mit den Punkten vom Kreis ([x1;y1:x2;y2]). Diese Liste soll in der main.py Datei aus der GUI Datei übergeben werden.
-    '''
 
+    # Klasse Kreis: Kreis mit Mittelpunkt, Radius, Punktzahl(Score), und Liste mit den Punkten vom Kreis ([x1;y1:x2;y2:...])
+    # Diese Liste soll in der main.py Datei aus der GUI Datei übergeben werden.
 
     def __init__(self, pixellist):
         self.mittelpunkt = None
@@ -13,13 +12,9 @@ class Kreis:
         self.pixellist = pixellist
 
     def findeMittelpunkt(self):
-        '''
-        Methode von der Klasse Kreis, die den Mittelpunkt bestimmt.
-        '''
-
-        
+        # Methode von der Klasse Kreis, die den Mittelpunkt bestimmt.
+        # Der Mittelpunkt wird bestimmt, indem das arithmetisches mittel aller X- und Y-Werte aus der Punkteliste berechnet wird
         länge = int(len(self.pixellist))
-        # print(länge)
         x_sum = 0
         y_sum = 0
         for i in range(int(länge/2)):
@@ -31,9 +26,9 @@ class Kreis:
         return x_Mitte, y_Mitte
     
     def findeRadius(self):
-        '''
-        Methode von der Klasse Kreis, die den Radius bestimmt.
-        '''
+        # Methode von der Klasse Kreis, die den Radius bestimmt.
+        # Der Radius wird bestimmt, indem man das arithmetisches mittel aller Abstände 
+        # zwischen Mittelpunkt und den Punkten von der Punktliste berechnet
 
         länge = int(len(self.pixellist))
         t = 0.0
@@ -45,9 +40,7 @@ class Kreis:
 
 
     def findeScore(self):
-        '''
-        Methode von der Klasse Kreis, die die Punktzahl bestimmt.
-        '''
+        # Methode von der Klasse Kreis, die die Punktzahl bestimmt.
 
         länge = len(self.pixellist) 
         varianzsumme = 0
